@@ -1,0 +1,4 @@
+*.jpg
+tickets/
+.idea
+*__pycache__*
