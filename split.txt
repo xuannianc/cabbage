@@ -1,0 +1,179 @@
+[INFO] processing image 6/69
+[INFO] processing image 7/69
+OpenCV(3.4.1) Error: Assertion failed (top >= 0 && bottom >= 0 && left >= 0 && right >= 0) in copyMakeBorder, file /io/opencv/modules/core/src/copy.cpp, line 1182
+[INFO] skipping image...
+[INFO] processing image 8/69
+ERROR:root:[ERROR] handle image ./invoice_numbers/2017092610412394_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 62, in <module>
+    cv2.BORDER_REPLICATE)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/core/src/copy.cpp:1182: error: (-215) top >= 0 && bottom >= 0 && left >= 0 && right >= 0 in function copyMakeBorder
+
+[INFO] processing image 9/69
+[INFO] processing image 10/69
+[INFO] processing image 11/69
+[INFO] processing image 12/69
+OpenCV(3.4.1) Error: Assertion failed (top >= 0 && bottom >= 0 && left >= 0 && right >= 0) in copyMakeBorder, file /io/opencv/modules/core/src/copy.cpp, line 1182
+[INFO] skipping image...
+ERROR:root:[ERROR] handle image ./invoice_numbers/201709261041055_1.jpg fail
+[INFO] processing image 13/69
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 62, in <module>
+    cv2.BORDER_REPLICATE)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/core/src/copy.cpp:1182: error: (-215) top >= 0 && bottom >= 0 && left >= 0 && right >= 0 in function copyMakeBorder
+
+[INFO] processing image 14/69
+[INFO] skipping image...
+[INFO] processing image 15/69
+OpenCV(3.4.1) Error: Assertion failed (top >= 0 && bottom >= 0 && left >= 0 && right >= 0) in copyMakeBorder, file /io/opencv/modules/core/src/copy.cpp, line 1182
+ERROR:root:[ERROR] handle image ./invoice_numbers/2017092610261949_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 62, in <module>
+    cv2.BORDER_REPLICATE)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/core/src/copy.cpp:1182: error: (-215) top >= 0 && bottom >= 0 && left >= 0 && right >= 0 in function copyMakeBorder
+
+[INFO] processing image 16/69
+[INFO] processing image 17/69
+[INFO] processing image 18/69
+OpenCV(3.4.1) Error: Assertion failed (top >= 0 && bottom >= 0 && left >= 0 && right >= 0) in copyMakeBorder, file /io/opencv/modules/core/src/copy.cpp, line 1182
+ERROR:root:[ERROR] handle image ./invoice_numbers/2017092610292719_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 62, in <module>
+    cv2.BORDER_REPLICATE)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/core/src/copy.cpp:1182: error: (-215) top >= 0 && bottom >= 0 && left >= 0 && right >= 0 in function copyMakeBorder
+
+[INFO] skipping image...
+[INFO] processing image 19/69
+OpenCV(3.4.1) Error: Assertion failed (ssize.width > 0 && ssize.height > 0) in resize, file /io/opencv/modules/imgproc/src/resize.cpp, line 4044
+ERROR:root:[ERROR] handle image ./invoice_numbers/2017092610410889_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 58, in <module>
+    roi_h28 = imutils.resize(roi, height=28)
+  File "/home/adam/workspace/venvs/tf/lib/python3.6/site-packages/imutils/convenience.py", line 91, in resize
+    resized = cv2.resize(image, dim, interpolation=inter)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/imgproc/src/resize.cpp:4044: error: (-215) ssize.width > 0 && ssize.height > 0 in function resize
+
+[INFO] skipping image...
+[INFO] processing image 20/69
+[INFO] skipping image...
+[INFO] processing image 21/69
+OpenCV(3.4.1) Error: Assertion failed (top >= 0 && bottom >= 0 && left >= 0 && right >= 0) in copyMakeBorder, file /io/opencv/modules/core/src/copy.cpp, line 1182
+ERROR:root:[ERROR] handle image ./invoice_numbers/2017092610412133_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 62, in <module>
+    cv2.BORDER_REPLICATE)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/core/src/copy.cpp:1182: error: (-215) top >= 0 && bottom >= 0 && left >= 0 && right >= 0 in function copyMakeBorder
+
+[INFO] processing image 22/69
+[INFO] processing image 23/69
+[INFO] processing image 24/69
+[INFO] processing image 25/69
+[INFO] processing image 26/69
+[INFO] processing image 27/69
+[INFO] processing image 28/69
+[INFO] processing image 29/69
+[INFO] ignoring character
+[INFO] ignoring character
+[INFO] processing image 30/69
+[INFO] processing image 31/69
+[INFO] processing image 32/69
+[INFO] processing image 33/69
+OpenCV(3.4.1) Error: Assertion failed (top >= 0 && bottom >= 0 && left >= 0 && right >= 0) in copyMakeBorder, file /io/opencv/modules/core/src/copy.cpp, line 1182
+ERROR:root:[ERROR] handle image ./invoice_numbers/2017092610292320_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 62, in <module>
+    cv2.BORDER_REPLICATE)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/core/src/copy.cpp:1182: error: (-215) top >= 0 && bottom >= 0 && left >= 0 && right >= 0 in function copyMakeBorder
+
+[INFO] skipping image...
+[INFO] processing image 34/69
+[INFO] processing image 35/69
+[INFO] processing image 36/69
+[INFO] processing image 37/69
+[INFO] processing image 38/69
+[INFO] processing image 39/69
+[INFO] ignoring character
+[INFO] processing image 40/69
+[INFO] processing image 41/69
+[INFO] processing image 42/69
+[INFO] processing image 43/69
+[INFO] processing image 44/69
+[INFO] processing image 45/69
+OpenCV(3.4.1) Error: Assertion failed (ssize.width > 0 && ssize.height > 0) in resize, file /io/opencv/modules/imgproc/src/resize.cpp, line 4044
+ERROR:root:[ERROR] handle image ./invoice_numbers/2017092610410932_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 58, in <module>
+    roi_h28 = imutils.resize(roi, height=28)
+  File "/home/adam/workspace/venvs/tf/lib/python3.6/site-packages/imutils/convenience.py", line 91, in resize
+    resized = cv2.resize(image, dim, interpolation=inter)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/imgproc/src/resize.cpp:4044: error: (-215) ssize.width > 0 && ssize.height > 0 in function resize
+
+[INFO] skipping image...
+[INFO] processing image 46/69
+[INFO] processing image 47/69
+[INFO] skipping image...
+[INFO] processing image 48/69
+OpenCV(3.4.1) Error: Assertion failed (top >= 0 && bottom >= 0 && left >= 0 && right >= 0) in copyMakeBorder, file /io/opencv/modules/core/src/copy.cpp, line 1182
+ERROR:root:[ERROR] handle image ./invoice_numbers/201709261041178_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 62, in <module>
+    cv2.BORDER_REPLICATE)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/core/src/copy.cpp:1182: error: (-215) top >= 0 && bottom >= 0 && left >= 0 && right >= 0 in function copyMakeBorder
+
+[INFO] processing image 49/69
+[INFO] processing image 50/69
+[INFO] processing image 51/69
+[INFO] ignoring character
+[INFO] processing image 52/69
+[INFO] processing image 53/69
+[INFO] ignoring character
+[INFO] skipping image...
+[INFO] processing image 54/69
+OpenCV(3.4.1) Error: Assertion failed (top >= 0 && bottom >= 0 && left >= 0 && right >= 0) in copyMakeBorder, file /io/opencv/modules/core/src/copy.cpp, line 1182
+ERROR:root:[ERROR] handle image ./invoice_numbers/2017092509304674_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 62, in <module>
+    cv2.BORDER_REPLICATE)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/core/src/copy.cpp:1182: error: (-215) top >= 0 && bottom >= 0 && left >= 0 && right >= 0 in function copyMakeBorder
+
+[INFO] processing image 55/69
+[INFO] processing image 56/69
+[INFO] skipping image...
+[INFO] processing image 57/69
+OpenCV(3.4.1) Error: Assertion failed (top >= 0 && bottom >= 0 && left >= 0 && right >= 0) in copyMakeBorder, file /io/opencv/modules/core/src/copy.cpp, line 1182
+ERROR:root:[ERROR] handle image ./invoice_numbers/2017092610412576_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 62, in <module>
+    cv2.BORDER_REPLICATE)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/core/src/copy.cpp:1182: error: (-215) top >= 0 && bottom >= 0 && left >= 0 && right >= 0 in function copyMakeBorder
+
+[INFO] processing image 58/69
+[INFO] skipping image...
+[INFO] processing image 59/69
+OpenCV(3.4.1) Error: Assertion failed (top >= 0 && bottom >= 0 && left >= 0 && right >= 0) in copyMakeBorder, file /io/opencv/modules/core/src/copy.cpp, line 1182
+ERROR:root:[ERROR] handle image ./invoice_numbers/2017092610411776_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 62, in <module>
+    cv2.BORDER_REPLICATE)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/core/src/copy.cpp:1182: error: (-215) top >= 0 && bottom >= 0 && left >= 0 && right >= 0 in function copyMakeBorder
+
+[INFO] processing image 60/69
+[INFO] processing image 61/69
+[INFO] processing image 62/69
+[INFO] processing image 63/69
+[INFO] processing image 64/69
+[INFO] processing image 65/69
+[INFO] processing image 66/69
+[INFO] processing image 67/69
+[INFO] processing image 68/69
+[INFO] processing image 69/69
+[INFO] skipping image...
+OpenCV(3.4.1) Error: Assertion failed (top >= 0 && bottom >= 0 && left >= 0 && right >= 0) in copyMakeBorder, file /io/opencv/modules/core/src/copy.cpp, line 1182
+ERROR:root:[ERROR] handle image ./invoice_numbers/2017092610411458_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 62, in <module>
+    cv2.BORDER_REPLICATE)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/core/src/copy.cpp:1182: error: (-215) top >= 0 && bottom >= 0 && left >= 0 && right >= 0 in function copyMakeBorder
+
+
+Process finished with exit code 0

@@ -2,6 +2,7 @@ from util import *
 import cv2
 import csv
 from pprint import pprint
+import json
 
 
 def scan(image):
@@ -54,6 +55,7 @@ def scan(image):
     logger.info('invoice_date={}'.format(invoice_date))
     return invoice_code, invoice_number, invoice_date
 
+
 def bulk_scan():
     scan_result = {'success': [], 'failure': [], 'error': []}
     for line in csv.reader(open('statistics.csv')):
@@ -84,7 +86,11 @@ def bulk_scan():
         except Exception as e:
             scan_result['error'].append(file_name)
             logger.exception('{} failed'.format(file_name))
+    json.dump(scan_result, open('scan_result.txt', 'w'))
     return scan_result
+
+
 # image = cv2.imread("tickets/2017092210555597.jpg")  # date
 # image = cv2.imread('tickets/2017092509304674.jpg')
 # scan(image)
+bulk_scan()

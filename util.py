@@ -102,14 +102,14 @@ def get_horizontal_lines(image):
     return all_combined_y
 
 
-def draw_lines(image, indexes, axis=0):
+def draw_lines(image, indexes, axis=0, width=2):
     H, W = image.shape[:2]
     if axis == 0:
         for idx in indexes:
-            cv2.line(image, (idx, 0), (idx, H), (0, 0, 255), 2)
+            cv2.line(image, (idx, 0), (idx, H), (0, 0, 255), width)
     elif axis == 1:
         for idx in indexes:
-            cv2.line(image, (0, idx), (W, idx), (0, 0, 255), 2)
+            cv2.line(image, (0, idx), (W, idx), (0, 0, 255), width)
     cv2.namedWindow('lines', cv2.WINDOW_NORMAL)
     cv2.imshow('lines', image)
     cv2.waitKey(0)
@@ -119,7 +119,7 @@ def extract_text(image, lang='chi_sim', psm=6, oem=1, is_digit=False):
     if is_digit:
         text = pytesseract.image_to_string(image,
                                            config='--psm {} --oem {} -c tessedit_char_whitelist=0123456789'.format(psm,
-                                                                                                                    0))
+                                                                                                                   0))
     else:
         text = pytesseract.image_to_string(image, lang=lang, config='--psm {} --oem {}'.format(psm, oem))
     return text

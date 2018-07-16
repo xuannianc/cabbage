@@ -1,0 +1,102 @@
+INFO:root:processing image 1/69
+INFO:root:processing image 2/69
+INFO:root:processing image 3/69
+INFO:root:processing image 4/69
+INFO:root:processing image 5/69
+ERROR:root:4-7-./invoice_numbers/201709261041055_1.jpg
+INFO:root:processing image 6/69
+INFO:root:processing image 7/69
+ERROR:root:6-4-./invoice_numbers/2017092610261949_1.jpg
+ERROR:root:6-5-./invoice_numbers/2017092610261949_1.jpg
+ERROR:root:6-6-./invoice_numbers/2017092610261949_1.jpg
+INFO:root:processing image 8/69
+[INFO] ignoring character
+INFO:root:processing image 9/69
+INFO:root:processing image 10/69
+INFO:root:processing image 11/69
+ERROR:root:10-0-./invoice_numbers/2017092610292719_1.jpg
+ERROR:root:10-1-./invoice_numbers/2017092610292719_1.jpg
+ERROR:root:10-2-./invoice_numbers/2017092610292719_1.jpg
+ERROR:root:10-7-./invoice_numbers/2017092610292719_1.jpg
+INFO:root:processing image 12/69
+OpenCV(3.4.1) Error: Assertion failed (ssize.width > 0 && ssize.height > 0) in resize, file /io/opencv/modules/imgproc/src/resize.cpp, line 4044
+ERROR:root:handling image 11-./invoice_numbers/2017092610410889_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 70, in <module>
+    roi_h28 = imutils.resize(roi, height=28)
+  File "/home/adam/workspace/venvs/tf/lib/python3.6/site-packages/imutils/convenience.py", line 91, in resize
+    resized = cv2.resize(image, dim, interpolation=inter)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/imgproc/src/resize.cpp:4044: error: (-215) ssize.width > 0 && ssize.height > 0 in function resize
+
+INFO:root:processing image 13/69
+ERROR:root:12-7-./invoice_numbers/2017092610412133_1.jpg
+INFO:root:processing image 14/69
+INFO:root:processing image 15/69
+INFO:root:processing image 16/69
+INFO:root:processing image 17/69
+INFO:root:processing image 18/69
+INFO:root:processing image 19/69
+INFO:root:processing image 20/69
+INFO:root:processing image 21/69
+INFO:root:processing image 22/69
+[INFO] ignoring character
+[INFO] ignoring character
+INFO:root:processing image 23/69
+INFO:root:processing image 24/69
+INFO:root:processing image 25/69
+INFO:root:processing image 26/69
+ERROR:root:25-5-./invoice_numbers/2017092610292320_1.jpg
+ERROR:root:25-6-./invoice_numbers/2017092610292320_1.jpg
+ERROR:root:25-7-./invoice_numbers/2017092610292320_1.jpg
+INFO:root:processing image 27/69
+INFO:root:processing image 28/69
+INFO:root:processing image 29/69
+INFO:root:processing image 30/69
+INFO:root:processing image 31/69
+INFO:root:processing image 32/69
+[INFO] ignoring character
+INFO:root:processing image 33/69
+INFO:root:processing image 34/69
+INFO:root:processing image 35/69
+INFO:root:processing image 36/69
+INFO:root:processing image 37/69
+INFO:root:processing image 38/69
+OpenCV(3.4.1) Error: Assertion failed (ssize.width > 0 && ssize.height > 0) in resize, file /io/opencv/modules/imgproc/src/resize.cpp, line 4044
+ERROR:root:handling image 37-./invoice_numbers/2017092610410932_1.jpg fail
+Traceback (most recent call last):
+  File "/home/adam/workspace/github/okra/annotate_test.py", line 70, in <module>
+    roi_h28 = imutils.resize(roi, height=28)
+  File "/home/adam/workspace/venvs/tf/lib/python3.6/site-packages/imutils/convenience.py", line 91, in resize
+    resized = cv2.resize(image, dim, interpolation=inter)
+cv2.error: OpenCV(3.4.1) /io/opencv/modules/imgproc/src/resize.cpp:4044: error: (-215) ssize.width > 0 && ssize.height > 0 in function resize
+
+INFO:root:processing image 39/69
+INFO:root:processing image 40/69
+ERROR:root:39-7-./invoice_numbers/201709261041178_1.jpg
+INFO:root:processing image 41/69
+INFO:root:processing image 42/69
+INFO:root:processing image 43/69
+INFO:root:processing image 44/69
+INFO:root:processing image 45/69
+INFO:root:processing image 46/69
+[INFO] ignoring character
+ERROR:root:45-7-./invoice_numbers/2017092509304674_1.jpg
+INFO:root:processing image 47/69
+INFO:root:processing image 48/69
+INFO:root:processing image 49/69
+ERROR:root:48-7-./invoice_numbers/2017092610412576_1.jpg
+INFO:root:processing image 50/69
+INFO:root:processing image 51/69
+ERROR:root:50-7-./invoice_numbers/2017092610411776_1.jpg
+INFO:root:processing image 52/69
+INFO:root:processing image 53/69
+INFO:root:processing image 54/69
+INFO:root:processing image 55/69
+INFO:root:processing image 56/69
+INFO:root:processing image 57/69
+INFO:root:processing image 58/69
+INFO:root:processing image 59/69
+INFO:root:processing image 60/69
+INFO:root:processing image 61/69
+INFO:root:processing image 62/69
+ERROR:root:61-2-./invoice_numbers/2017092610411458_1.jpg
