@@ -22,7 +22,7 @@ class SimpleDatasetLoader:
             # load the image and extract the class label assuming
             # that our path has the following format:
             # /path/to/dataset/{class}/{image}.jpg
-            image = cv2.imread(imagePath)
+            image = cv2.imread(imagePath, 0)
             label = imagePath.split(os.path.sep)[-2]
             # check to see if our preprocessors are not None
             if self.preprocessors is not None:
