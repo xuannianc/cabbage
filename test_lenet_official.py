@@ -12,10 +12,13 @@ sdl = SimpleDatasetLoader()
 image_paths = list(paths.list_images('./datasets/digits'))
 x_test, y_test = sdl.load(image_paths)
 x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
+x_test = x_test.astype('float32')
+x_test /= 255
 print(x_test.shape)
 print(y_test.shape)
 le = LabelBinarizer()
 y_test = le.fit_transform(y_test)
+print('class_labels:{}'.format(le.classes_))
 print(y_test.shape)
 # evaluate the network
 print("[INFO] evaluating network...")
