@@ -8,6 +8,7 @@ from dataset_loaders import SimpleDatasetLoader
 from sklearn.preprocessing import LabelBinarizer
 
 model = load_model('models/hdf5/mnist_lenet_official.hdf5')
+print(model.summary())
 sdl = SimpleDatasetLoader()
 image_paths = list(paths.list_images('./datasets/digits'))
 x_test, y_test = sdl.load(image_paths)

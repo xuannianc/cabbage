@@ -17,7 +17,9 @@ logging.basicConfig(level=logging.DEBUG)
 # grab the image paths then initialize the dictionary of character
 # counts
 # imagePaths = list(paths.list_images(args["input"]))
-image_paths = list(paths.list_images('./invoice_numbers'))
+import glob
+image_paths = glob.glob('./invoice_numbers/*_2.jpg')
+# image_paths = list(paths.list_images('./invoice_numbers'))
 # image_paths = ['./invoice_numbers/201709261041055_1.jpg']
 # image_path = './invoice_numbers/2017092610412394_1.jpg'
 # print(image_paths.index(image_path))
