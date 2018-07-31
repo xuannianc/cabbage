@@ -10,7 +10,7 @@ import imutils
 from imutils import paths
 
 labels_to_names = {0: 'code', 1: 'number', 2: 'date', 3: 'check_code', 4: 'buyer', 5: 'seller'}
-model = models.load_model('/home/adam/.keras/models/retinanet/vat_0729232039.h5', backbone_name='resnet50')
+model = models.load_model('/home/adam/workspace/github/keras-retinanet/snapshots/vat_0730092517.h5', backbone_name='resnet50')
 # image = cv2.imread('/home/adam/Pictures/vat/1100162350_12093275_20180427.jpg')
 for image_file_path in paths.list_images('/home/adam/Pictures/vat_test'):
     image = read_image_bgr(image_file_path)
@@ -40,7 +40,7 @@ for image_file_path in paths.list_images('/home/adam/Pictures/vat_test'):
         text = "{}: {:.2f}".format(name, score)
         cv2.rectangle(draw, (start_x, start_y), (end_x, end_y), color, 4)
         y = start_y - 10 if start_y - 10 > 10 else start_y + 10
-        cv2.putText(draw, text, (start_x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 1)
+        cv2.putText(draw, text, (start_x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, color, 2)
     # show the output image
     cv2.namedWindow('Output', cv2.WINDOW_NORMAL)
     cv2.imshow("Output", draw)
