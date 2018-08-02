@@ -1,5 +1,5 @@
 import time
-import cv2
+
 
 class Timer(object):
     def __init__(self):
@@ -32,12 +32,13 @@ from PIL import Image
 import keras.backend  as K
 
 from imp import reload
-from keras_ocr import densenet
+import densenet
+
+reload(densenet)
 
 import os
 from keras.layers import Lambda
 from keras.optimizers import SGD
-import imutils
 import tensorflow as tf
 import keras.backend.tensorflow_backend as K
 from matplotlib import pyplot as plt
@@ -58,48 +59,56 @@ def get_session(gpu_fraction=0.8):
 
 K.set_session(get_session())
 
+char = ''
 with open('char_std_5990.txt', encoding='utf-8') as f:
-    chars = f.read().split('\n')
+    # for ch in f.readlines():
+    #     ch = ch.strip('\r\n')
+    #     char = char + ch
+    char = f.read().split('\n')
 
 # caffe_ocr中把0作为blank，但是tf 的CTC  the last class is reserved to the blank label.
 # https://github.com/tensorflow/tensorflow/blob/master/tensorflow/core/util/ctc/ctc_loss_calculator.h
-nclass = len(chars)
-print('nclass:', len(chars))
-id_to_char = {i: j for i, j in enumerate(chars)}
+# char = char[1:] + '卍'
+char = char + '^'
+nclass = len(char)
+print('nclass:', len(char))
+id_to_char = {i: j for i, j in enumerate(char)}
 
-model_path = '/home/adam/workspace/github/okra/keras_ocr/weights-densent-32-0.9846.hdf5'
+modelPath = 'weights-densent-32-0.9846.hdf5'
 input = Input(shape=(32, None, 1), name='the_input')
 y_pred = densenet.dense_cnn(input, nclass)
 basemodel = Model(inputs=input, outputs=y_pred)
-basemodel.load_weights(model_path)
+basemodel.load_weights(modelPath)
 t = Timer()
 
 
-def predict(image_path):
-    image = cv2.imread(image_path, 0)
-    image = imutils.resize(image, height=32)
-    image_height, image_width = image.shape[:2]
-    image = image.astype(np.float32) / 255.0 - 0.5
-    image = image.reshape(32, image_width, 1)
-    # X = np.array([X])
-    input = np.expand_dims(image, axis=0)
+def predict(img_path):
+    img = Image.open(img_path)
+    im = img.convert('L')
+    scale = im.size[1] * 1.0 / 32
+    w = im.size[0] / scale
+    w = int(w)
+    print('w:', w)
+
+    im = im.resize((w, 32), Image.ANTIALIAS)
+    img = np.array(im).astype(np.float32) / 255.0 - 0.5
+    X = img.reshape((32, w, 1))
+    X = np.array([X])
 
     t.tic()
-    y_pred = basemodel.predict(input)
+    y_pred = basemodel.predict(X)
     t.toc()
     print("times,", t.diff)
-    # argmax = np.argmax(y_pred, axis=2)[0]
+    argmax = np.argmax(y_pred, axis=2)[0]
 
     y_pred = y_pred[:, :, :]
     out = K.get_value(K.ctc_decode(y_pred, input_length=np.ones(y_pred.shape[0]) * y_pred.shape[1], )[0][0])[:, :]
-    out = ''.join([id_to_char[x] for x in out[0]])
+    out = u''.join([id_to_char[x] for x in out[0]])
 
-    return out, image
+    return out, im
+testimage = '/home/adam/Pictures/vat_dates/1100162350_12093275_20180427_299606_2.jpg'
+#testimage = r'E:\deeplearn\OCR\Sample\samples\000000001.jpg'
+b,img= predict(testimage)
+print('预测m1:',b)
 
-
-test_image = '/home/adam/Pictures/vat_dates/1100162350_12093275_20180427_299606_2.jpg'
-result, image = predict(test_image)
-print(result)
-cv2.imshow('test_image', image)
-cv2.waitKey(0)
-# plt.imshow(image, cmap='gray')
+plt.imshow(img,cmap='gray')
