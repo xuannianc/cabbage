@@ -19,6 +19,8 @@ import os
 import json
 import tensorflow as tf
 import keras.backend.tensorflow_backend as K
+from keras_ocr.hdf5 import HDF5DatasetGenerator
+import keras
 
 
 class CRNN():
@@ -46,11 +48,11 @@ class CRNN():
         basemodel = Model(inputs=input, outputs=y_pred)
         basemodel.summary()
         label = Input(name='label', shape=[max_string_len], dtype='int64')
-        input_length = Input(name='input_length', shape=[1], dtype='int64')
+        seq_length = Input(name='seq_length', shape=[1], dtype='int64')
         label_length = Input(name='label_length', shape=[1], dtype='int64')
         loss_out = Lambda(ctc_lambda_func, output_shape=(1,),
-                          name='ctc')([label, y_pred, input_length, label_length])
-        model = Model(input=[input, label, input_length, label_length], output=[loss_out])
+                          name='ctc')([label, y_pred, seq_length, label_length])
+        model = Model(input=[input, label, seq_length, label_length], output=[loss_out])
         return model
 
 
@@ -59,8 +61,43 @@ def ctc_lambda_func(args):
     y_true, y_pred, input_length, label_length = args
     return K.ctc_batch_cost(y_true, y_pred, input_length, label_length)
 
-def generator():
 
+# def gen(batch_size=128):
+#     X = np.zeros((batch_size, width, height, 3), dtype=np.uint8)
+#     y = np.zeros((batch_size, n_len), dtype=np.uint8)
+#     while True:
+#         generator = ImageCaptcha(width=width, height=height)
+#         for i in range(batch_size):
+#             random_str = ''.join([random.choice(characters) for j in range(4)])
+#             X[i] = np.array(generator.generate_image(random_str)).transpose(1, 0, 2)
+#             y[i] = [characters.find(x) for x in random_str]
+#         yield [X, y, np.ones(batch_size) * int(conv_shape[1] - 2),
+#                np.ones(batch_size) * n_len], np.ones(batch_size)
 
-crnn = CRNN.build()
+gen = HDF5DatasetGenerator('vat_dates.hdf5', batch_size=32).generator
+
+callbacks = [
+    # Interrupts training when improvement stops
+    keras.callbacks.EarlyStopping(
+        # Monitors the model’s validation accuracy
+        monitor='acc',
+        # Interrupts training when accuracy has stopped
+        # improving for more than one epoch (that is, two epochs)
+        patience=10,
+    ),
+    # Saves the current weights after every epoch
+    keras.callbacks.ModelCheckpoint(
+        # Path to the destination model file
+        filepath='vat_model.h5',
+        # These two arguments mean you won’t overwrite the
+        # model file unless val_loss has improved, which allows
+        # you to keep the best model seen during training.
+        monitor='val_loss',
+        save_best_only=True
+    )
+]
+crnn = CRNN.build(max_string_len=11)
 crnn.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer='adadelta')
+callbacks = []
+while True:
+    crnn.fit_generator(gen(), steps_per_epoch=1000, callbacks=callbacks, validation_data=gen(), validation_steps=10)
