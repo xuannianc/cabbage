@@ -80,7 +80,7 @@ class HDF5DatasetGenerator:
             # extract the images and labels from the HDF dataset
             images = self.db["data"][batch_idxs]
             labels = self.db["labels"][batch_idxs]
-            yield [images, labels, np.ones(self.batch_size) * (248 // 4 - 2), np.ones(self.batch_size) * 11], np.ones(self.batch_size)
+            yield [images, labels, np.ones(self.batch_size) * (248 // 4 - 1), np.ones(self.batch_size) * 11], np.ones(self.batch_size)
             # increment the total number of epochs
             epochs += 1
 
