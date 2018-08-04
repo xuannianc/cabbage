@@ -10,9 +10,9 @@ import imutils
 from imutils import paths
 
 labels_to_names = {0: 'code', 1: 'number', 2: 'date', 3: 'check_code', 4: 'buyer', 5: 'seller'}
-model = models.load_model('/home/adam/workspace/github/keras-retinanet/snapshots/vat_0730092517.h5', backbone_name='resnet50')
+model = models.load_model('/home/adam/workspace/github/keras-retinanet/snapshots/vat_0801082138.h5', backbone_name='resnet50')
 # image = cv2.imread('/home/adam/Pictures/vat/1100162350_12093275_20180427.jpg')
-for image_file_path in paths.list_images('/home/adam/Pictures/vat_test'):
+for image_file_path in paths.list_images('/home/adam/Pictures/vat_other'):
     image = read_image_bgr(image_file_path)
     # image = read_image_bgr('/home/adam/Pictures/1100181130_16283226_20180402.jpg')
     # copy to draw on

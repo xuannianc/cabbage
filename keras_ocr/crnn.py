@@ -25,7 +25,7 @@ import keras
 
 class CRNN():
     @staticmethod
-    def build(input_shape=(32, None, 1), rnn_unit=256, num_classes=5990, max_string_len=30):
+    def build(input_shape=(32, 248, 1), rnn_unit=256, num_classes=14, max_string_len=11):
         input = Input(shape=input_shape, name='the_input')
         m = Conv2D(64, kernel_size=(3, 3), activation='relu', padding='same', name='conv1')(input)
         m = MaxPooling2D(pool_size=(2, 2), strides=(2, 2), name='pool1')(m)
@@ -33,12 +33,12 @@ class CRNN():
         m = MaxPooling2D(pool_size=(2, 2), strides=(2, 2), name='pool2')(m)
         m = Conv2D(256, kernel_size=(3, 3), activation='relu', padding='same', name='conv3')(m)
         m = Conv2D(256, kernel_size=(3, 3), activation='relu', padding='same', name='conv4')(m)
-        m = MaxPooling2D(pool_size=(2, 1), strides=(2, 2), padding='valid', name='pool3')(m)
+        m = MaxPooling2D(pool_size=(2, 1), strides=(2, 1), padding='valid', name='pool3')(m)
         m = Conv2D(512, kernel_size=(3, 3), activation='relu', padding='same', name='conv5')(m)
         m = BatchNormalization(axis=3)(m)
         m = Conv2D(512, kernel_size=(3, 3), activation='relu', padding='same', name='conv6')(m)
         m = BatchNormalization(axis=3)(m)
-        m = MaxPooling2D(pool_size=(2, 1), strides=(2, 2), padding='valid', name='pool4')(m)
+        m = MaxPooling2D(pool_size=(2, 1), strides=(2, 1), padding='valid', name='pool4')(m)
         m = Conv2D(512, kernel_size=(2, 2), activation='relu', padding='valid', name='conv7')(m)
         m = Permute((2, 1, 3), name='permute')(m)
         m = TimeDistributed(Flatten(), name='timedistrib')(m)
@@ -46,13 +46,13 @@ class CRNN():
         m = Bidirectional(GRU(rnn_unit, return_sequences=True, implementation=2), name='blstm2')(m)
         y_pred = Dense(num_classes, name='blstm2_out', activation='softmax')(m)
         basemodel = Model(inputs=input, outputs=y_pred)
-        basemodel.summary()
         label = Input(name='label', shape=[max_string_len], dtype='int64')
         seq_length = Input(name='seq_length', shape=[1], dtype='int64')
         label_length = Input(name='label_length', shape=[1], dtype='int64')
         loss_out = Lambda(ctc_lambda_func, output_shape=(1,),
                           name='ctc')([label, y_pred, seq_length, label_length])
         model = Model(input=[input, label, seq_length, label_length], output=[loss_out])
+        model.summary()
         return model
 
 

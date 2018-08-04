@@ -76,11 +76,11 @@ class HDF5DatasetGenerator:
         # reach the desired number of epochs
         while epochs < passes:
             # loop over the HDF5 dataset
-            batch_idxs = np.random.randint(0, self.num_images, self.batch_size)
+            batch_idxs = sorted(np.random.choice(range(self.num_images), self.batch_size, replace=False))
             # extract the images and labels from the HDF dataset
             images = self.db["data"][batch_idxs]
             labels = self.db["labels"][batch_idxs]
-            yield (images, labels, np.ones(self.batch_size) * (248 // 4), 11, )
+            yield [images, labels, np.ones(self.batch_size) * (248 // 4 - 2), np.ones(self.batch_size) * 11], np.ones(self.batch_size)
             # increment the total number of epochs
             epochs += 1
 
