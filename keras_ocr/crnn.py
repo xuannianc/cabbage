@@ -90,8 +90,10 @@ def evaluate(base_model, batch_num=10):
 #         yield [X, y, np.ones(batch_size) * int(conv_shape[1] - 2),
 #                np.ones(batch_size) * n_len], np.ones(batch_size)
 
-gen = HDF5DatasetGenerator('vat_dates.hdf5', batch_size=32).generator
+# gen = HDF5DatasetGenerator('vat_dates.hdf5', batch_size=32).generator
+gen = HDF5DatasetGenerator('vat_dates_0806_697.hdf5', batch_size=32).generator
 base_model, crnn = CRNN.build(max_string_len=11)
+
 
 class Evaluate(Callback):
     def __init__(self):
@@ -116,7 +118,7 @@ callbacks = [
     # Saves the current weights after every epoch
     keras.callbacks.ModelCheckpoint(
         # Path to the destination model file
-        filepath='vat_model.h5',
+        filepath='vat_model_0806_697.hdf5',
         # These two arguments mean you won’t overwrite the
         # model file unless val_loss has improved, which allows
         # you to keep the best model seen during training.
@@ -124,13 +126,12 @@ callbacks = [
         save_best_only=True,
         verbose=1
     ),
-    keras.callbacks.TensorBoard(
-        log_dir='log',
-        histogram_freq=1
-    ),
+    #    keras.callbacks.TensorBoard(
+    #        log_dir='log',
+    #        histogram_freq=1
+    #    ),
     evaluator
 ]
-db = h5py.File('vat_dates.hdf5')
 
 # clipnorm seems to speeds up convergence
 sgd = SGD(lr=0.02, decay=1e-6, momentum=0.9, nesterov=True, clipnorm=5)
@@ -139,9 +140,11 @@ crnn.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer=sgd)
 H = crnn.fit_generator(gen(), steps_per_epoch=1000,
                        callbacks=callbacks,
                        epochs=100,
-                       validation_data=(
-                           [db['data'][:30], db['labels'][:30], np.ones(30) * (248 // 4 - 2), np.ones(30) * 11],
-                           np.ones(30)))
+                       # validation_data=(
+                       # [db['data'][:30], db['labels'][:30], np.ones(30) * (248 // 4 - 2), np.ones(30) * 11],
+                       # np.ones(30)))
+                       validation_data=gen(),
+                       validation_steps=30)
 
 plt.style.use("ggplot")
 plt.figure()
