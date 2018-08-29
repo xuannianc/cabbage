@@ -5,9 +5,9 @@ from keras_ocr.hdf5 import HDF5DatasetWriter
 import os
 import numpy as np
 
-hdf5_writer = HDF5DatasetWriter(data_dims=(697, 32, 248, 1),
-                                label_dims=(697, 11),
-                                output_path='vat_dates_0806_697.hdf5')
+hdf5_writer = HDF5DatasetWriter(data_dims=(1076, 32, 248, 1),
+                                label_dims=(1076, 11),
+                                output_path='vat_dates_0807_1076.hdf5')
 for image_path in paths.list_images('/home/adam/Pictures/vat/vat_dates/'):
     image_file = os.path.split(image_path)[1]
     image = cv2.imread(image_path, 0)

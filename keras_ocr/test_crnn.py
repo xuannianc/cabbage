@@ -6,11 +6,11 @@ from keras import backend as K
 import numpy as np
 import glob
 
-crnn = load_model('vat_model_0806_697.hdf5', custom_objects={'<lambda>': lambda y_true, y_pred: y_pred})
+crnn = load_model('vat_model_0807_1076.hdf5', custom_objects={'<lambda>': lambda y_true, y_pred: y_pred})
 # crnn = load_model('vat_model.hdf5', custom_objects={'<lambda>': lambda y_true, y_pred: y_pred})
 output = crnn.get_layer('blstm2_out').output
 base_model = Model(input=crnn.input[0], output=output)
-for image_path in glob.glob('/home/adam/Pictures/vat_other/2017/10/17/*_2.jpg'):
+for image_path in glob.glob('/home/adam/Pictures/vat_other/2017/11/7/*_2.jpg'):
     image = cv2.imread(image_path, 0)
     image = imutils.resize(image, height=32)
     height, width = image.shape[:2]

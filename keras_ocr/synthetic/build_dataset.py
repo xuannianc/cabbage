@@ -6,13 +6,13 @@ import os
 import numpy as np
 import os.path as osp
 
-hdf5_writer = HDF5DatasetWriter(data_dims=(279606, 32, 280, 1),
-                                label_dims=(279606, 10),
-                                output_path='synthetic_validation_0808_279606.hdf5')
+hdf5_writer = HDF5DatasetWriter(data_dims=(279600, 32, 280, 1),
+                                label_dims=(279600, 10),
+                                output_path='synthetic_validation_0808_279600.hdf5')
 DATASET_DIR = '/home/adam/.keras/datasets/synthetic_chinese_string'
 idx = 0
 with open(osp.join(DATASET_DIR, 'train.txt')) as f:
-    for line in f.read().split('\n')[3000000:]:
+    for line in f.read().split('\n')[3000000:3279600]:
         image_file = line.split(' ')[0]
         image_file_path = osp.join(DATASET_DIR, 'train', image_file)
         if not osp.exists(image_file_path):

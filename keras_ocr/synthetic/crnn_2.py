@@ -19,14 +19,15 @@ import os
 import json
 import tensorflow as tf
 import keras.backend.tensorflow_backend as K
-from keras_ocr.hdf5 import HDF5DatasetGenerator
+from keras_ocr.synthetic.hdf5_2 import HDF5DatasetGenerator
 import keras
 import h5py
+import time
 
 
 class CRNN():
     @staticmethod
-    def build(input_shape=(32, None, 1), rnn_unit=256, num_classes=5990, max_string_len=10):
+    def build(input_shape=(32, None, 1), rnn_unit=256, num_classes=5991, max_string_len=10):
         input = Input(shape=input_shape, name='the_input')
         m = Conv2D(64, kernel_size=(3, 3), activation='relu', padding='same', name='conv1')(input)
         m = MaxPooling2D(pool_size=(2, 2), strides=(2, 2), name='pool1')(m)
@@ -91,8 +92,10 @@ def evaluate(base_model, batch_num=10):
 #                np.ones(batch_size) * n_len], np.ones(batch_size)
 
 # gen = HDF5DatasetGenerator('vat_dates.hdf5', batch_size=32).generator
-gen = HDF5DatasetGenerator('synthetic_train_0807_100000.hdf5', batch_size=64).generator
-val_gen = HDF5DatasetGenerator('synthetic_validation_0807_20000.hdf5', batch_size=64).generator
+gen = HDF5DatasetGenerator('synthetic_train_0808_3000000.hdf5', batch_size=300).generator
+val_gen = HDF5DatasetGenerator('synthetic_validation_0808_279600.hdf5', batch_size=100).generator
+
+
 # base_model, crnn = CRNN.build(max_string_len=10)
 
 
@@ -104,6 +107,19 @@ class Evaluate(Callback):
         acc = evaluate(base_model) * 100
         self.accs.append(acc)
         print('acc={}%'.format(acc))
+
+
+class BatchSaver(Callback):
+    def __init__(self, N):
+        self.N = N
+
+    def on_batch_end(self, batch, logs=None):
+        if batch % self.N == 0:
+            self.model.save('{}_'.format(batch) + str(logs.get('loss')) + '_' + str(time.time()) + '.hdf5')
+
+    def on_epoch_end(self, epoch, logs=None):
+        old_lr = K.get_value(crnn.optimizer.lr)
+        K.set_value(self.model.optimizer.lr, old_lr - 0.00001)
 
 
 evaluator = Evaluate()
@@ -119,7 +135,7 @@ callbacks = [
     # Saves the current weights after every epoch
     keras.callbacks.ModelCheckpoint(
         # Path to the destination model file
-        filepath='synthetic_model_0808_100000.hdf5',
+        filepath='synthetic_model_0810_3000000.hdf5',
         # These two arguments mean you won’t overwrite the
         # model file unless val_loss has improved, which allows
         # you to keep the best model seen during training.
@@ -132,31 +148,31 @@ callbacks = [
     #        histogram_freq=1
     #    ),
     # evaluator
+    BatchSaver(100)
 ]
 
 # clipnorm seems to speeds up convergence
 sgd = SGD(lr=0.05, decay=1e-6, momentum=0.9, nesterov=True, clipnorm=5)
 # crnn.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer=sgd)
 # crnn.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer='adadelta', metrics=['accuracy'])
-crnn = load_model('synthetic_model_0808_100000_0.695.hdf5', custom_objects={'<lambda>': lambda y_true, y_pred: y_pred})
+crnn = load_model('synthetic_model_0810_3000000_0.0765_0.1086.hdf5',
+                  custom_objects={'<lambda>': lambda y_true, y_pred: y_pred})
 print('old__lr={}'.format(K.get_value(crnn.optimizer.lr)))
-K.set_value(crnn.optimizer.lr, 0.00001)
+K.set_value(crnn.optimizer.lr, 0.0001)
 print('new__lr={}'.format(K.get_value(crnn.optimizer.lr)))
-H = crnn.fit_generator(gen(), steps_per_epoch=1000,
+H = crnn.fit_generator(gen(), steps_per_epoch=10000,
                        callbacks=callbacks,
                        epochs=100,
                        # validation_data=(
                        # [db['data'][:30], db['labels'][:30], np.ones(30) * (248 // 4 - 2), np.ones(30) * 11],
                        # np.ones(30)))
                        validation_data=val_gen(),
-                       validation_steps=30)
+                       validation_steps=2000)
 
 plt.style.use("ggplot")
 plt.figure()
-plt.plot(np.arange(0, H.epoch), H.history["loss"], label="train_loss")
-plt.plot(np.arange(0, H.epoch), H.history["val_loss"], label="val_loss")
-plt.plot(np.arange(0, H.epoch), H.history["acc"], label="train_acc")
-plt.plot(np.arange(0, H.epoch), H.history["val_acc"], label="val_acc")
+plt.plot(H.history["loss"], label="train_loss")
+plt.plot(H.history["val_loss"], label="val_loss")
 plt.title("Training Loss and Accuracy")
 plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")
