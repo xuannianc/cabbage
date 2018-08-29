@@ -22,8 +22,7 @@ image_paths = glob.glob('/home/adam/Pictures/aa-ocr-test/*.png')
 #                '/home/adam/Pictures/vat/vat_numbers/3600164130_02509918_20171214_1.jpg',
 #                '/home/adam/Pictures/vat/vat_numbers/5100163320_13217064_20171113_1.jpg',
 #                '/home/adam/Pictures/vat/vat_numbers/1200164350_02309743_20180210_1.jpg']
-# model = load_model('models/best_weights_noaug_0.9896_0.0959.hdf5')
-model = load_model('models/best_weights.hdf5')
+model = load_model('models/best_weights_noaug_0.9896_0.0959.hdf5')
 counts = {}
 # loop over the image paths
 for (i, image_path) in enumerate(image_paths):
@@ -68,8 +67,8 @@ for (i, image_path) in enumerate(image_paths):
             # to see, then wait for a keypress
             roi_height, roi_width = roi.shape[:2]
             print('raw_roi_height={},raw_roi_width={}'.format(roi_height, roi_width))
-            # cv2.imshow("raw_roi", roi)
-            # key = cv2.waitKey(0)
+            cv2.imshow("raw_ROI", roi)
+            key = cv2.waitKey(0)
             if roi_width > roi_height:
                 logging.error('width bigger than height:image_path={},idx={}-{}'.format(image_path, i, j))
                 cv2.imwrite("./datasets/errors/error-{}-{}.jpg".format(i, j), roi)
@@ -83,6 +82,8 @@ for (i, image_path) in enumerate(image_paths):
             roi = roi.reshape(28, 28, 1)
             # cv2.imshow("roi", roi)
             # key = cv2.waitKey(0)
+            cv2.imshow("roi", roi)
+            key = cv2.waitKey(0)
             roi = np.expand_dims(roi, axis=0)
             pred = model.predict(roi).argmax(axis=1).tolist()[0]
             preds.append(str(pred))
