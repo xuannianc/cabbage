@@ -14,10 +14,10 @@ from PIL import Image, ImageDraw, ImageFont
 DATASET_DIR = '/home/adam/Pictures/vat_test'
 with open('char_std_5990.txt') as f:
     chars = f.read().split('\n')
-crnn = load_model('synthetic_model_0810_3000000_0.164_0.182.hdf5', custom_objects={'<lambda>': lambda y_true, y_pred: y_pred})
+crnn = load_model('synthetic_model_0810_3000000_0.0765_0.1086.hdf5', custom_objects={'<lambda>': lambda y_true, y_pred: y_pred})
 # crnn = load_model('vat_model.hdf5', custom_objects={'<lambda>': lambda y_true, y_pred: y_pred})
 output = crnn.get_layer('blstm2_out').output
-base_model = Model(input=crnn.input[0], output=output)
+base_model = Model(inputs=crnn.input[0], outputs=output)
 for image_path in paths.list_images(osp.join(DATASET_DIR, 'test')):
     image = cv2.imread(image_path, 0)
     image = imutils.resize(image, height=32)
