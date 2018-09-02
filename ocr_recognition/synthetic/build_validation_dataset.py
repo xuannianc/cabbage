@@ -1,9 +1,9 @@
 import cv2
-from keras_ocr.hdf5 import HDF5DatasetWriter
-from keras_ocr.synthetic.config import *
+from ocr_recognition.synthetic.hdf5_2 import HDF5DatasetWriter
+from ocr_recognition.synthetic.config import *
 import os.path as osp
 
-output_path = 'synthetic_validation_0829_279600.hdf5'
+output_path = 'data/synthetic_validation_0829_279600.hdf5'
 if osp.exists(output_path):
     print('{} already exists'.format(output_path))
     exit(-1)

@@ -1,9 +1,9 @@
 import cv2
-from keras_ocr.hdf5 import HDF5DatasetWriter
-from keras_ocr.synthetic.config import *
+from ocr_recognition.synthetic.hdf5_2 import HDF5DatasetWriter
+from ocr_recognition.synthetic.config import *
 import os.path as osp
 
-output_path = 'synthetic_test_0829_364400.hdf5'
+output_path = 'data/synthetic_test_0829_364400.hdf5'
 if osp.exists(output_path):
     print('{} already exists'.format(output_path))
     exit(-1)
@@ -12,7 +12,8 @@ hdf5_writer = HDF5DatasetWriter(data_dims=(364400, 32, 280, 1),
                                 output_path=output_path)
 num_images = 0
 with open(TEST_TXT_PATH) as f:
-    for idx, line in enumerate(f.read().split('\n')):
+    # split 后最后一个元素为 ''
+    for idx, line in enumerate(f.read().split('\n')[:-1]):
         image_file = line.split(' ')[0]
         image_file_path = osp.join(TEST_DIR, image_file)
         if not osp.exists(image_file_path):

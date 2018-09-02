@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import json
 import os
-from keras_ocr.synthetic.hdf5_2 import HDF5DatasetGenerator
+from ocr_recognition.synthetic.hdf5_2 import HDF5DatasetGenerator
 from keras import backend as K
 from keras.models import Model
 
@@ -73,7 +73,7 @@ class AccuracyEvaluator(Callback):
         self.test_gen = HDF5DatasetGenerator(test_db_path, batch_size).generator
 
     def on_batch_end(self, batch, logs=None):
-        base_model_output = self.model.get_layer('base_model_output_layer').output
+        base_model_output = self.model.get_layer('base_model_output').output
         base_model = Model(inputs=self.model.input[0], outputs=base_model_output)
         sum_acc = 0.0
         for test_batch in self.test_gen():
@@ -88,3 +88,23 @@ class AccuracyEvaluator(Callback):
                 sum_acc += ((y_test == out).sum(axis=1) == 10).mean()
         acc = sum_acc / 364400 * 100
         print('acc={}%'.format(acc))
+
+
+class LearningRateUpdator(Callback):
+    def __init__(self, init_lr):
+        super(LearningRateUpdator, self).__init__()
+        self.init_lr = init_lr
+
+    def on_train_begin(self, logs=None):
+        old_lr = K.get_value(self.model.optimizer.lr)
+        print('old_init_lr={}'.format(old_lr))
+        K.set_value(self.model.optimizer.lr, self.init_lr)
+        print('new_init_lr={}'.format(K.get_value(self.model.optimizer.lr)))
+
+    def on_epoch_end(self, epoch, logs=None):
+        model = self.model
+        old_lr = K.get_value(model.optimizer.lr)
+        print('old_lr={},epoch={}'.format(old_lr, epoch))
+        new_lr = old_lr - self.init_lr * 0.01
+        K.set_value(model.optimizer.lr, new_lr)
+        print('new_lr={},epoch={}'.format(K.get_value(model.optimizer.lr), epoch))
