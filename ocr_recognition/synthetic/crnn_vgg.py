@@ -5,6 +5,7 @@ from keras import models
 from keras import callbacks
 from ocr_recognition.synthetic.hdf5_2 import HDF5DatasetGenerator
 from ocr_recognition.synthetic.callback import *
+from ocr_recognition.synthetic.config import *
 
 
 def ctc_lambda_func(args):
@@ -45,18 +46,18 @@ def crnn(input_shape=(32, 280, 1), rnn_unit=256, num_classes=5991, max_string_le
     return base_model, model
 
 
-# base_model, model = crnn()
+base_model, model = crnn()
 # clipnorm seems to speeds up convergence
 sgd = SGD(lr=0.1, decay=1e-3, momentum=0.9, nesterov=True, clipnorm=5)
-# model.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer=sgd)
-model = models.load_model('models/synthetic_model_0829_3000000_1.3227_1.0404.hdf5',
-                  custom_objects={'<lambda>': lambda y_true, y_pred: y_pred})
-gen = HDF5DatasetGenerator('data/synthetic_train_0829_3000000.hdf5', batch_size=300).generator
-val_gen = HDF5DatasetGenerator('data/synthetic_validation_0829_279600.hdf5', batch_size=100).generator
+model.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer=sgd)
+# model = models.load_model('models/synthetic_model_0829_3000000_1.3227_1.0404.hdf5',
+#                  custom_objects={'<lambda>': lambda y_true, y_pred: y_pred})
+gen = HDF5DatasetGenerator(TRAIN_DB_PATH, batch_size=300).generator
+val_gen = HDF5DatasetGenerator(VALIDATION_DB_PATH, batch_size=100).generator
 
 # callbacks
-training_monitor = TrainingMonitor(figure_path='synthetic_0829_3000000.jpg', json_path='synthetic_0829_3000000.json', start_at=5)
-accuracy_evaluator = AccuracyEvaluator('data/synthetic_test_0829_364400.hdf5', batch_size=100)
+# training_monitor = TrainingMonitor(figure_path='synthetic_0829_3000000.jpg', json_path='synthetic_0829_3000000.json', start_at=5)
+# accuracy_evaluator = AccuracyEvaluator(TEST_DB_PATH, batch_size=100)
 learning_rate_updator = LearningRateUpdator(init_lr=0.01)
 callbacks = [
     # Interrupts training when improvement stops
@@ -78,7 +79,7 @@ callbacks = [
         save_best_only=True,
         verbose=1
     ),
-    training_monitor,
+    # training_monitor,
     # accuracy_evaluator
     learning_rate_updator
 ]
