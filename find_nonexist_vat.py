@@ -2,6 +2,8 @@ import imutils
 from imutils import paths
 import os
 import glob
+import cv2
+import os.path as osp
 
 
 # for image_file_path in paths.list_images('/home/adam/Pictures/vat_test'):
@@ -36,6 +38,7 @@ def find_vat_date_without_vat(vat_dir, vat_date_dir):
 
 def find_vat_without_check_code(vat_dir, check_code_dir):
     print('********** nonexist vat check code file **********')
+    vat_without_check_code = []
     for vat_file_path in glob.glob(vat_dir + '/*.jpg'):
         # 查找没有对应 check_code 的 vat
         vat_file = os.path.split(vat_file_path)[1]
@@ -49,9 +52,14 @@ def find_vat_without_check_code(vat_dir, check_code_dir):
         elif len(vat_file_name.split('_')) == 4:
             # 普票
             if not os.path.exists(vat_check_code_file_path):
-                print(vat_file)
+                vat_without_check_code.append(vat_file)
+                image = cv2.imread(osp.join(vat_dir,vat_file))
+                cv2.namedWindow('{}'.format(vat_file), cv2.WINDOW_NORMAL)
+                cv2.imshow('{}'.format(vat_file), image)
+                cv2.waitKey(0)
         else:
             print('{} 名字不规范'.format(vat_file_name))
+    print('\n'.join(sorted(vat_without_check_code)))
     print('********** nonexist vat check code file **********')
 
 
@@ -76,8 +84,8 @@ def find_check_code_without_vat(vat_dir, check_code_dir):
 #     if not os.path.exists(vat_file_path):
 #         print(other_vat_file_path)
 
-vat_dir = '/home/adam/Pictures/vat_other/2017/11/7'
+vat_dir = '/home/adam/Pictures/201801/vat'
 # find_vat_without_check_code(vat_dir, vat_dir + '/check_code')
-# find_check_code_without_vat(vat_dir, vat_dir + '/check_code')
+find_check_code_without_vat(vat_dir, vat_dir + '/check_code')
 # find_vat_without_vat_date(vat_dir, vat_dir + '/vat_date')
 # find_vat_date_without_vat(vat_dir, vat_dir + '/vat_date')
