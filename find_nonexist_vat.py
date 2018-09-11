@@ -78,14 +78,25 @@ def find_check_code_without_vat(vat_dir, check_code_dir):
 
 
 # 查找存在于子目录中但是不存在于总目录的 vat 文件
-# for other_vat_file_path in glob.glob('/home/adam/Pictures/vat_other/2017/11/7/*.jpg'):
-#     other_vat_file = os.path.split(other_vat_file_path)[1]
-#     vat_file_path = os.path.join('/home/adam/Pictures/vat_other/2017/vat', other_vat_file)
-#     if not os.path.exists(vat_file_path):
-#         print(other_vat_file_path)
+def find_vat_in_one_dir_but_not_in_another_dir(one_dir, another_dir):
+    print('********** nonexist vat file **********')
+    nonexist_files = []
+    for one_vat_file_path in glob.glob(one_dir + '/*.jpg'):
+        one_vat_file = os.path.split(one_vat_file_path)[1]
+        another_vat_file_path = os.path.join(another_dir, one_vat_file)
+        if not os.path.exists(another_vat_file_path):
+            nonexist_files.append(one_vat_file)
+    print('nonexist_num={}'.format(len(nonexist_files)))
+    print('\n'.join(sorted(nonexist_files)))
+    print('********** nonexist vat file **********')
 
 vat_dir = '/home/adam/Pictures/201801/vat'
 # find_vat_without_check_code(vat_dir, vat_dir + '/check_code')
 find_check_code_without_vat(vat_dir, vat_dir + '/check_code')
 # find_vat_without_vat_date(vat_dir, vat_dir + '/vat_date')
 # find_vat_date_without_vat(vat_dir, vat_dir + '/vat_date')
+
+one_dir = '/home/adam/Pictures/vat_other/2017/vat'
+another_dir = '/home/adam/Pictures/vat'
+# find_vat_in_one_dir_but_not_in_another_dir(one_dir, another_dir)
+find_vat_in_one_dir_but_not_in_another_dir(one_dir, another_dir)
