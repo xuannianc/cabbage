@@ -5,7 +5,7 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint
 from ocr_recognition.common.callback import TrainingMonitor, LearningRateUpdator, AccuracyEvaluator
 from ocr_recognition.check_code.hdf5 import HDF5DatasetGenerator
 from ocr_recognition.check_code.config import *
-from keras.optimizers import RMSprop
+from keras.optimizers import RMSprop, SGD
 
 
 def ctc_lambda_func(args):
@@ -41,17 +41,18 @@ def get_new_model(crnn_model_path, num_classes, max_string_len):
     return model
 
 
-model = get_new_model('../synthetic/synthetic_model_0810_3000000_0.0765_0.1086.hdf5', NUM_CLASSES, MAX_STRING_LEN)
-opt = RMSprop(lr=0.001)
+model = get_new_model('../synthetic/models/synthetic_model_0810_3000000_0.0765_0.1086.hdf5', NUM_CLASSES, MAX_STRING_LEN)
+# opt = RMSprop(lr=0.01)
+opt = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True, clipnorm=5)
 model.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer=opt)
 gen = HDF5DatasetGenerator(TRAIN_DB_PATH, batch_size=50, seq_len=124, label_len=23).generator
 val_gen = HDF5DatasetGenerator(VALIDATION_DB_PATH, batch_size=10, seq_len=124, label_len=23).generator
 
 # callbacks
-training_monitor = TrainingMonitor(figure_path='check_code_0910_1000.jpg', json_path='check_code_0910_1000.json',
+training_monitor = TrainingMonitor(figure_path='check_code_ft_0910_1000.jpg', json_path='check_code_ft_0910_1000.json',
                                    start_at=0)
 # accuracy_evaluator = AccuracyEvaluator(TEST_DB_PATH, batch_size=100)
-learning_rate_updator = LearningRateUpdator(init_lr=0.001)
+learning_rate_updator = LearningRateUpdator(init_lr=0.01)
 callbacks = [
     # Interrupts training when improvement stops
     EarlyStopping(
@@ -64,7 +65,7 @@ callbacks = [
     # Saves the current weights after every epoch
     ModelCheckpoint(
         # Path to the destination model file
-        filepath='models/check_code_model_0910_1000.hdf5',
+        filepath='models/check_code_ft_model_0910_1000.hdf5',
         # These two arguments mean you won’t overwrite the
         # model file unless val_loss has improved, which allows
         # you to keep the best model seen during training.
@@ -74,10 +75,10 @@ callbacks = [
     ),
     training_monitor,
     # accuracy_evaluator
-    learning_rate_updator
+    # learning_rate_updator
 ]
-model.fit_generator(gen(), steps_per_epoch=1000 // 50,
+model.fit_generator(gen(), steps_per_epoch=1000,
                     callbacks=callbacks,
                     epochs=100,
                     validation_data=val_gen(),
-                    validation_steps=200 // 10)
+                    validation_steps=200)
