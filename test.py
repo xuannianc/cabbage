@@ -22,7 +22,7 @@ import os
 # print(token_index)
 
 
-DATASET_DIR = '/home/adam/.keras/datasets/synthetic_chinese_string'
+# DATASET_DIR = '/home/adam/.keras/datasets/synthetic_chinese_string'
 # image = cv2.imread(os.path.join(DATASET_DIR, 'test', '20456343_4045240981.jpg'))
 # print(image.shape)
 # cv2.imshow('xxx', image)
@@ -38,10 +38,14 @@ DATASET_DIR = '/home/adam/.keras/datasets/synthetic_chinese_string'
 #         shutil.move(os.path.join(DATASET_DIR,'images',test_image_file), os.path.join(DATASET_DIR, 'test'))
 #         print('{} is moved'.format(test_image_file))
 
-print(len(os.listdir(os.path.join(DATASET_DIR, 'test'))))
-print(len(os.listdir(os.path.join(DATASET_DIR, 'train'))))
+# print(len(os.listdir(os.path.join(DATASET_DIR, 'test'))))
+# print(len(os.listdir(os.path.join(DATASET_DIR, 'train'))))
 
 # for image_file_path in paths.list_images(os.path.join(DATASET_DIR, 'test')):
 #    image = cv2.imread(image_file_path)
 #    cv2.imshow('{}'.format(os.path.split(image_file_path)[-1]), image)
 #    cv2.waitKey(0)
+
+import glob
+image_paths = glob.glob('/home/adam/Pictures/vat_other/2017/vat/vat_number/*.jpg')
+print(image_paths[:10])

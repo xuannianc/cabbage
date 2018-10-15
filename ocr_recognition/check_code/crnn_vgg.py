@@ -53,10 +53,10 @@ def crnn(input_shape=(32, None, 1), rnn_unit=128, num_classes=NUM_CLASSES, max_s
 
 base_model, model = crnn()
 # clipnorm seems to speeds up convergence
-sgd = SGD(lr=0.1, decay=1e-3, momentum=0.9, nesterov=True, clipnorm=5)
+sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True, clipnorm=5)
 model.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer=sgd)
-# model = models.load_model('models/synthetic_model_0829_3000000_1.3227_1.0404.hdf5',
-#                  custom_objects={'<lambda>': lambda y_true, y_pred: y_pred})
+#model = models.load_model('models/check_code_model_0910_1000.hdf5',
+#                 custom_objects={'<lambda>': lambda y_true, y_pred: y_pred})
 gen = HDF5DatasetGenerator(TRAIN_DB_PATH, batch_size=50, seq_len=124, label_len=23).generator
 val_gen = HDF5DatasetGenerator(VALIDATION_DB_PATH, batch_size=10, seq_len=124, label_len=23).generator
 
@@ -64,7 +64,7 @@ val_gen = HDF5DatasetGenerator(VALIDATION_DB_PATH, batch_size=10, seq_len=124, l
 training_monitor = TrainingMonitor(figure_path='check_code_0910_1000.jpg', json_path='check_code_0910_1000.json',
                                    start_at=0)
 # accuracy_evaluator = AccuracyEvaluator(TEST_DB_PATH, batch_size=100)
-learning_rate_updator = LearningRateUpdator(init_lr=0.1)
+learning_rate_updator = LearningRateUpdator(init_lr=0.001)
 callbacks = [
     # Interrupts training when improvement stops
     callbacks.EarlyStopping(
@@ -87,7 +87,7 @@ callbacks = [
     ),
     training_monitor,
     # accuracy_evaluator
-    learning_rate_updator
+    # learning_rate_updator
 ]
 model.fit_generator(gen(), steps_per_epoch=1000,
                     callbacks=callbacks,

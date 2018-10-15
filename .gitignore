@@ -5,3 +5,4 @@ tickets/
 *.h5
 .ipynb_checkpoints/
 events*
+*.jpg

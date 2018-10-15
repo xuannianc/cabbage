@@ -9,10 +9,12 @@ import numpy as np
 import imutils
 from imutils import paths
 
-labels_to_names = {0: 'code', 1: 'number', 2: 'date', 3: 'check_code', 4: 'buyer', 5: 'seller'}
-model = models.load_model('/home/adam/workspace/github/keras-retinanet/snapshots/vat_0801082138.h5', backbone_name='resnet50')
+labels_to_names = {0: 'code', 1: 'number', 2: 'date', 3: 'check_code', 4: 'buyer', 5: 'seller', 6: 'goods',
+                   7: 'amount_without_tax', 8: 'tax_rate', 9: 'tax_amount', 10: 'amount_with_tax'}
+model = models.load_model('/home/adam/workspace/github/keras-retinanet/snapshots/vat_09181253.h5',
+                          backbone_name='resnet152')
 # image = cv2.imread('/home/adam/Pictures/vat/1100162350_12093275_20180427.jpg')
-for image_file_path in paths.list_images('/home/adam/Pictures/vat_other'):
+for image_file_path in paths.list_images('/home/adam/Pictures/vat_other/2017/vat'):
     image = read_image_bgr(image_file_path)
     # image = read_image_bgr('/home/adam/Pictures/1100181130_16283226_20180402.jpg')
     # copy to draw on

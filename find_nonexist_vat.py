@@ -53,7 +53,7 @@ def find_vat_without_check_code(vat_dir, check_code_dir):
             # 普票
             if not os.path.exists(vat_check_code_file_path):
                 vat_without_check_code.append(vat_file)
-                image = cv2.imread(osp.join(vat_dir,vat_file))
+                image = cv2.imread(osp.join(vat_dir, vat_file))
                 cv2.namedWindow('{}'.format(vat_file), cv2.WINDOW_NORMAL)
                 cv2.imshow('{}'.format(vat_file), image)
                 cv2.waitKey(0)
@@ -89,6 +89,7 @@ def find_vat_in_one_dir_but_not_in_another_dir(one_dir, another_dir):
     print('nonexist_num={}'.format(len(nonexist_files)))
     print('\n'.join(sorted(nonexist_files)))
     print('********** nonexist vat file **********')
+
 
 vat_dir = '/home/adam/Pictures/201801/vat'
 # find_vat_without_check_code(vat_dir, vat_dir + '/check_code')
